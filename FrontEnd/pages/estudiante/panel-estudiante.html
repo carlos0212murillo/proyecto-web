@@ -1,0 +1,311 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inicio | Portal del Estudiante UNAH</title>
+
+  <!-- Bootstrap 5 Oficial -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-body-tertiary">
+
+  <div class="d-flex min-vh-100">
+    <!-- Contenedor donde navbar.js inyecta el menú lateral -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Área de contenido principal -->
+    <div class="flex-grow-1 d-flex flex-column min-w-0">
+      <!-- Contenedor donde navbar.js inyecta la barra superior -->
+      <div id="topbarContainer"></div>
+
+      <main class="container-fluid p-4 p-lg-5" style="max-width: 1320px;">
+
+        <!-- ENCABEZADO DE BIENVENIDA Y ACCIONES -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+          <div>
+            <p class="text-uppercase text-body-secondary fw-semibold mb-1" style="font-size: 0.75rem; letter-spacing: 0.04em;">
+              LUNES, 9 DE NOVIEMBRE DE 2026
+            </p>
+            <h1 class="h2 fw-bold text-body mb-1">Estudiante</h1>
+            <p class="text-body-secondary small mb-0">Resumen de tu avance</p>
+          </div>
+
+          <div class="d-flex align-items-center gap-2">
+            <!-- Selector de período -->
+            <div class="dropdown">
+              <button class="btn bg-body border rounded-3 d-flex align-items-center gap-2 px-3 py-2 small fw-semibold text-body dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="bi bi-calendar3 text-body-secondary"></i>
+                <span>2026-II</span>
+              </button>
+              <ul class="dropdown-menu dropdown-menu-end small">
+                <li><a class="dropdown-item active" href="#">2026-II</a></li>
+                <li><a class="dropdown-item" href="#">2026-I</a></li>
+              </ul>
+            </div>
+
+            <!-- Botón + Matrícula (reemplaza "#" por la ruta de tu vista de matrícula) -->
+            <a href="./oferta-academica.html" class="btn btn-success rounded-3 px-3 py-2 small fw-semibold d-flex align-items-center gap-2">
+              <i class="bi bi-plus-lg"></i>
+              <span>Matrícula</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- FILA DE 3 TARJETAS DE MÉTRICAS (KPIs) -->
+        <div class="row g-3 mb-4">
+          <!-- Tarjeta 1: Promedio Global -->
+          <div class="col-12 col-md-4">
+            <div class="card border rounded-4 p-4 h-100 bg-body shadow-sm">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="text-body-secondary small fw-semibold">Promedio Global</span>
+                <i class="bi bi-graph-up-arrow text-success"></i>
+              </div>
+              <div class="display-6 fw-bold text-body mb-2">85 %</div>
+              <div class="small text-success fw-semibold d-flex align-items-center gap-1">
+                <i class="bi bi-graph-up"></i>
+                <span>Excelente desempeño</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta 2: Materias aprobadas -->
+          <div class="col-12 col-md-4">
+            <div class="card border rounded-4 p-4 h-100 bg-body shadow-sm">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="text-body-secondary small fw-semibold">Materias aprobadas</span>
+                <i class="bi bi-check-circle text-success"></i>
+              </div>
+              <div class="mb-2">
+                <span class="display-6 fw-bold text-body">24</span>
+                <span class="text-body-secondary fs-5">/ 40</span>
+              </div>
+              <div class="small text-body-secondary">16 materias restantes</div>
+            </div>
+          </div>
+
+          <!-- Tarjeta 3: Materias actuales -->
+          <div class="col-12 col-md-4">
+            <div class="card border rounded-4 p-4 h-100 bg-body shadow-sm">
+              <div class="d-flex justify-content-between align-items-center mb-2">
+                <span class="text-body-secondary small fw-semibold">Materias actuales</span>
+                <i class="bi bi-book text-success"></i>
+              </div>
+              <div class="mb-2">
+                <span class="display-6 fw-bold text-body">5</span>
+                <span class="text-body-secondary fs-6">materias</span>
+              </div>
+              <div class="small text-body-secondary">16 unidades valorativas</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- SECCIÓN INFERIOR: MIS MATERIAS ACTUALES (IZQUIERDA) Y PAGOS/RECIBOS (DERECHA) -->
+        <div class="row g-4">
+
+          <!-- Columna izquierda: Lista de materias actuales -->
+          <div class="col-12 col-lg-8">
+            <div class="card border rounded-4 p-4 bg-body shadow-sm h-100">
+              <!-- Cabecera de tarjeta -->
+              <div class="d-flex justify-content-between align-items-start mb-1">
+                <h2 class="h5 fw-bold text-body mb-0">Mis materias actuales</h2>
+                <!-- Enlace Ver historial (reemplaza "#" por tu ruta de historial) -->
+                <a href="#" class="text-success text-decoration-none small fw-semibold">
+                  Ver historial <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+              </div>
+              <div class="d-flex align-items-center gap-2 mb-4">
+                <span class="text-body-secondary small">Semestre 6 · Período 2026-II</span>
+                <span class="badge bg-success text-white rounded-pill px-2 py-1">5 materias</span>
+              </div>
+
+              <!-- Encabezados de tabla -->
+              <div class="row text-uppercase text-body-secondary fw-bold border-bottom pb-2 mb-2 px-2 d-none d-sm-flex" style="font-size: 0.7rem; letter-spacing: 0.04em;">
+                <div class="col-7">Materia / Docente</div>
+                <div class="col-1 text-center">UV</div>
+                <div class="col-4 text-end pe-4">Horario</div>
+              </div>
+
+              <!-- Lista de asignaturas -->
+              <div class="list-group list-group-flush">
+
+                <!-- Materia 1 -->
+                <a href="#" class="list-group-item list-group-item-action bg-body px-2 py-3 border-bottom d-flex align-items-center justify-content-between gap-2">
+                  <div class="d-flex align-items-center gap-3 col-sm-7">
+                    <div class="border border-success text-success bg-body rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                      <i class="bi bi-code-slash"></i>
+                    </div>
+                    <div>
+                      <div class="fw-semibold text-body small">Ingeniería de software</div>
+                      <div class="text-body-secondary" style="font-size: 0.75rem;">IS- · Ing</div>
+                    </div>
+                  </div>
+                  <div class="text-center text-body-secondary small fw-semibold col-sm-1 d-none d-sm-block">4</div>
+                  <div class="text-end col-sm-3">
+                    <div class="text-body fw-medium" style="font-size: 0.78rem;">Lun · Jue &nbsp; 08:00–10:00</div>
+                    <div class="text-body-secondary" style="font-size: 0.75rem;">Aula 303</div>
+                  </div>
+                  <i class="bi bi-chevron-right text-body-secondary small"></i>
+                </a>
+
+                <!-- Materia 2 -->
+                <a href="#" class="list-group-item list-group-item-action bg-body px-2 py-3 border-bottom d-flex align-items-center justify-content-between gap-2">
+                  <div class="d-flex align-items-center gap-3 col-sm-7">
+                    <div class="border border-success text-success bg-body rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                      <i class="bi bi-database"></i>
+                    </div>
+                    <div>
+                      <div class="fw-semibold text-body small">Bases de datos II</div>
+                      <div class="text-body-secondary" style="font-size: 0.75rem;">IS- · Ing.</div>
+                    </div>
+                  </div>
+                  <div class="text-center text-body-secondary small fw-semibold col-sm-1 d-none d-sm-block">3</div>
+                  <div class="text-end col-sm-3">
+                    <div class="text-body fw-medium" style="font-size: 0.78rem;">Lun · Mie &nbsp; 10:00–12:00</div>
+                    <div class="text-body-secondary" style="font-size: 0.75rem;">Laboratorio 3</div>
+                  </div>
+                  <i class="bi bi-chevron-right text-body-secondary small"></i>
+                </a>
+
+                <!-- Materia 3 -->
+                <a href="#" class="list-group-item list-group-item-action bg-body px-2 py-3 border-bottom d-flex align-items-center justify-content-between gap-2">
+                  <div class="d-flex align-items-center gap-3 col-sm-7">
+                    <div class="border border-success text-success bg-body rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                      <i class="bi bi-diagram-3"></i>
+                    </div>
+                    <div>
+                      <div class="fw-semibold text-body small">Redes de Datos</div>
+                      <div class="text-body-secondary" style="font-size: 0.75rem;">IS-303 · Ing. Laura Gómez</div>
+                    </div>
+                  </div>
+                  <div class="text-center text-body-secondary small fw-semibold col-sm-1 d-none d-sm-block">3</div>
+                  <div class="text-end col-sm-3">
+                    <div class="text-body fw-medium" style="font-size: 0.78rem;">Lun · Mie &nbsp; 14:00–16:00</div>
+                    <div class="text-body-secondary" style="font-size: 0.75rem;">Laboratorio 2</div>
+                  </div>
+                  <i class="bi bi-chevron-right text-body-secondary small"></i>
+                </a>
+
+                <!-- Materia 4 -->
+                <a href="#" class="list-group-item list-group-item-action bg-body px-2 py-3 border-bottom d-flex align-items-center justify-content-between gap-2">
+                  <div class="d-flex align-items-center gap-3 col-sm-7">
+                    <div class="border border-success text-success bg-body rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                      <i class="bi bi-bar-chart-line"></i>
+                    </div>
+                    <div>
+                      <div class="fw-semibold text-body small">Teoría de la Computación</div>
+                      <div class="text-body-secondary" style="font-size: 0.75rem;">IS- · Ing</div>
+                    </div>
+                  </div>
+                  <div class="text-center text-body-secondary small fw-semibold col-sm-1 d-none d-sm-block">3</div>
+                  <div class="text-end col-sm-3">
+                    <div class="text-body fw-medium" style="font-size: 0.78rem;">Lun · Mie &nbsp; 08:00–10:00</div>
+                    <div class="text-body-secondary" style="font-size: 0.75rem;">Aula 309</div>
+                  </div>
+                  <i class="bi bi-chevron-right text-body-secondary small"></i>
+                </a>
+
+                <!-- Materia 5 -->
+                <a href="#" class="list-group-item list-group-item-action bg-body px-2 py-3 d-flex align-items-center justify-content-between gap-2">
+                  <div class="d-flex align-items-center gap-3 col-sm-7">
+                    <div class="border border-success text-success bg-body rounded-3 d-flex align-items-center justify-content-center flex-shrink-0" style="width: 40px; height: 40px;">
+                      <i class="bi bi-code-slash"></i>
+                    </div>
+                    <div>
+                      <div class="fw-semibold text-body small">Programación Web</div>
+                      <div class="text-body-secondary" style="font-size: 0.75rem;">IS- · Ing</div>
+                    </div>
+                  </div>
+                  <div class="text-center text-body-secondary small fw-semibold col-sm-1 d-none d-sm-block">3</div>
+                  <div class="text-end col-sm-3">
+                    <div class="text-body fw-medium" style="font-size: 0.78rem;">Lun · Mie &nbsp; 10:00–12:00</div>
+                    <div class="text-body-secondary" style="font-size: 0.75rem;">Aula 405</div>
+                  </div>
+                  <i class="bi bi-chevron-right text-body-secondary small"></i>
+                </a>
+
+              </div>
+            </div>
+          </div>
+
+          <!-- Columna derecha: Tarjetas de pagos y recibos -->
+          <div class="col-12 col-lg-4 d-flex flex-column gap-4">
+
+            <!-- Tarjeta: Tu próxima matrícula -->
+            <div class="card border-2 border-success rounded-4 p-4 bg-body shadow-sm">
+              <div class="d-flex align-items-center gap-2 text-body fw-semibold mb-1">
+                <i class="bi bi-wallet2 text-success"></i>
+                <span>Tu próxima matrícula</span>
+              </div>
+              <p class="text-body-secondary small mb-3">Período 2027-I · Recibo disponible</p>
+              <div class="h2 fw-bold text-body mb-3">L. 270</div>
+
+              <!-- Botón que abre el modal de Pago exitoso -->
+              <button type="button" class="btn btn-success w-100 py-2 rounded-3 fw-semibold small mb-3 d-flex align-items-center justify-content-center gap-2" data-bs-toggle="modal" data-bs-target="#modalPagoExitoso">
+                <i class="bi bi-credit-card"></i>
+                <span>Pagar matrícula</span>
+              </button>
+
+              <!-- Enlace Descargar recibo (reemplaza "#" por la ruta del comprobante/recibo) -->
+              <div class="text-center">
+                <a href="#" class="text-success text-decoration-none small fw-semibold">
+                  <i class="bi bi-download me-1"></i> Descargar recibo
+                </a>
+              </div>
+            </div>
+
+            <!-- Tarjeta: Reposición de exámenes -->
+            <div class="card border border-success rounded-4 p-4 bg-body shadow-sm">
+              <div class="d-flex align-items-center gap-2 text-body fw-semibold mb-1">
+                <i class="bi bi-wallet2 text-success"></i>
+                <span>Reposición de exámenes</span>
+              </div>
+              <p class="text-body-secondary small mb-3">Reposición III PAC - 2026</p>
+              <div class="h2 fw-bold text-body mb-3">L. 100</div>
+
+              <!-- Enlace Descargar recibo (reemplaza "#" por la ruta del recibo) -->
+              <div class="text-center pt-1">
+                <a href="#" class="text-success text-decoration-none small fw-semibold">
+                  <i class="bi bi-download me-1"></i> Descargar recibo
+                </a>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL: Pago exitoso -->
+  <div class="modal fade" id="modalPagoExitoso" tabindex="-1" aria-labelledby="tituloModalPago" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-sm">
+      <div class="modal-content border-0 rounded-4 shadow text-center p-3">
+        <div class="modal-body">
+          <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 56px; height: 56px;">
+            <i class="bi bi-check-lg fs-2"></i>
+          </div>
+          <h5 class="modal-title fw-bold text-body mb-2" id="tituloModalPago">Pago exitoso</h5>
+          <p class="text-body-secondary small mb-4">Tu transacción ha sido procesada correctamente.</p>
+          <button type="button" class="btn btn-success w-100 rounded-3 fw-semibold" data-bs-dismiss="modal">
+            Aceptar
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Navegación compartida -->
+  <script src="../../js/utils/navbar.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      renderizarNavegacionEstudiante("inicio");
+    });
+  </script>
+</body>
+</html>

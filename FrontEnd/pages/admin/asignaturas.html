@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión de Asignaturas | Portal Administrativo UNAH</title>
+
+  <!-- Bootstrap 5 Oficial -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-body-tertiary">
+
+  <div class="d-flex min-vh-100">
+    <!-- Barra lateral administrativa -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Área de contenido principal -->
+    <div class="flex-grow-1 d-flex flex-column min-w-0">
+      <!-- Barra superior -->
+      <div id="topbarContainer"></div>
+
+      <main class="container-fluid p-4 p-lg-5" style="max-width: 1320px;">
+
+        <!-- ENCABEZADO -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+          <div>
+            <p class="text-uppercase text-body-secondary fw-semibold mb-1" style="font-size: 0.75rem; letter-spacing: 0.04em;">
+              CATÁLOGO ACADÉMICO · PLAN DE ESTUDIOS
+            </p>
+            <h1 class="h2 fw-bold text-body mb-1">Asignaturas</h1>
+            <p class="text-body-secondary small mb-0">
+              Crea, edita y administra el estado de las materias del catálogo institucional.
+            </p>
+          </div>
+
+          <button type="button" id="btnAbrirNuevaAsignatura" class="btn btn-success rounded-3 px-4 py-2 small fw-semibold d-flex align-items-center gap-2">
+            <i class="bi bi-plus-lg"></i>
+            <span>Nueva asignatura</span>
+          </button>
+        </div>
+
+        <!-- ALERTA DINÁMICA -->
+        <div id="alertaAsignaturas" class="alert d-none alert-dismissible fade show py-2 small mb-4" role="alert">
+          <span id="textoAlertaAsignaturas"></span>
+          <button type="button" class="btn-close btn-sm" aria-label="Cerrar" onclick="document.getElementById('alertaAsignaturas').classList.add('d-none')"></button>
+        </div>
+
+        <!-- RESUMEN RÁPIDO DEL CATÁLOGO (3 TARJETAS) -->
+        <div class="row g-3 mb-4">
+          <div class="col-12 col-md-4">
+            <div class="card border rounded-4 p-3 px-4 h-100 bg-body shadow-sm">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="text-body-secondary small fw-semibold">Total en catálogo</span>
+                <i class="bi bi-journal-text text-body-secondary"></i>
+              </div>
+              <div class="h3 fw-bold text-body mb-0" id="kpiTotalCatalogo">0</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="card border rounded-4 p-3 px-4 h-100 bg-body shadow-sm">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="text-body-secondary small fw-semibold">Asignaturas activas</span>
+                <i class="bi bi-check-circle text-success"></i>
+              </div>
+              <div class="h3 fw-bold text-success mb-0" id="kpiActivasCatalogo">0</div>
+            </div>
+          </div>
+
+          <div class="col-12 col-md-4">
+            <div class="card border rounded-4 p-3 px-4 h-100 bg-body shadow-sm">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="text-body-secondary small fw-semibold">Asignaturas inactivas</span>
+                <i class="bi bi-slash-circle text-secondary"></i>
+              </div>
+              <div class="h3 fw-bold text-body-secondary mb-0" id="kpiInactivasCatalogo">0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLA CRUD DE ASIGNATURAS -->
+        <div class="card border rounded-4 p-4 bg-body shadow-sm">
+          <!-- Filtros y búsqueda -->
+          <div class="row g-2 align-items-center mb-4">
+            <div class="col-12 col-md-5">
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-search"></i>
+                </span>
+                <input
+                  type="text"
+                  id="inputBuscarAsignatura"
+                  class="form-control bg-body border-start-0 small"
+                  placeholder="Buscar por código o nombre (ej. IS-601)..."
+                >
+              </div>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-3">
+              <select id="filtroCarreraAsignatura" class="form-select bg-body small">
+                <option value="Todas" selected>Todas las carreras</option>
+                <option value="Ingeniería en Sistemas">Ingeniería en Sistemas</option>
+                <option value="Ciencias Matemáticas">Ciencias Matemáticas</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-sm-6 col-md-2">
+              <select id="filtroEstadoAsignatura" class="form-select bg-body small">
+                <option value="todos" selected>Estado: todos</option>
+                <option value="Activa">Activas</option>
+                <option value="Inactiva">Inactivas</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-md-2 text-md-end">
+              <span class="text-body-secondary small fw-semibold" id="contadorResultadosAsignaturas">0 registros</span>
+            </div>
+          </div>
+
+          <!-- Tabla -->
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr class="text-uppercase text-body-secondary border-bottom" style="font-size: 0.72rem; letter-spacing: 0.04em;">
+                  <th style="width: 11%;">Código</th>
+                  <th style="width: 28%;">Asignatura</th>
+                  <th class="text-center" style="width: 8%;">UV</th>
+                  <th style="width: 20%;">Carrera</th>
+                  <th style="width: 15%;">Prerrequisitos</th>
+                  <th class="text-center" style="width: 8%;">Estado</th>
+                  <th class="text-end" style="width: 10%;">Acciones</th>
+                </tr>
+              </thead>
+              <tbody id="tablaAsignaturasBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL: CREAR / EDITAR ASIGNATURA                                        -->
+  <!-- ======================================================================= -->
+  <div class="modal fade" id="modalFormAsignatura" tabindex="-1" aria-labelledby="tituloModalAsignatura" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 shadow">
+        <form id="formAsignatura" novalidate>
+          <div class="modal-header border-bottom px-4 py-3">
+            <h5 class="modal-title fw-bold text-body" id="tituloModalAsignatura">Nueva asignatura</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          </div>
+
+          <div class="modal-body p-4">
+            <input type="hidden" id="asignaturaIdEdicion">
+
+            <div class="row g-3">
+              <div class="col-12 col-sm-4">
+                <label for="inputCodigoAsignatura" class="form-label small fw-semibold text-body">Código <span class="text-danger">*</span></label>
+                <input type="text" id="inputCodigoAsignatura" class="form-control bg-body text-uppercase" placeholder="Ej. IS-604" required>
+                <div class="invalid-feedback">Ingresa un código único (ej. IS-604).</div>
+              </div>
+
+              <div class="col-12 col-sm-5">
+                <label for="inputNombreAsignatura" class="form-label small fw-semibold text-body">Nombre de la asignatura <span class="text-danger">*</span></label>
+                <input type="text" id="inputNombreAsignatura" class="form-control bg-body" placeholder="Ej. Sistemas Operativos II" required>
+                <div class="invalid-feedback">Ingresa el nombre de la asignatura.</div>
+              </div>
+
+              <div class="col-12 col-sm-3">
+                <label for="inputUvAsignatura" class="form-label small fw-semibold text-body">Unidades Valorativas <span class="text-danger">*</span></label>
+                <input type="number" id="inputUvAsignatura" class="form-control bg-body" min="1" max="8" value="3" required>
+                <div class="invalid-feedback">Entre 1 y 8 UV.</div>
+              </div>
+
+              <div class="col-12 col-sm-6">
+                <label for="selectCarreraModal" class="form-label small fw-semibold text-body">Carrera <span class="text-danger">*</span></label>
+                <select id="selectCarreraModal" class="form-select bg-body" required>
+                  <option value="Ingeniería en Sistemas" selected>Ingeniería en Sistemas</option>
+                  <option value="Ciencias Matemáticas">Ciencias Matemáticas</option>
+                </select>
+              </div>
+
+              <div class="col-12 col-sm-6">
+                <label for="inputPrerrequisitos" class="form-label small fw-semibold text-body">Prerrequisitos (códigos)</label>
+                <input type="text" id="inputPrerrequisitos" class="form-control bg-body text-uppercase" placeholder="Ej. IS-501, MM-420 (opcional)">
+                <div class="form-text small">Separa varios códigos con coma. Déjalo vacío si no requiere.</div>
+              </div>
+
+              <div class="col-12">
+                <label for="inputDescripcionAsignatura" class="form-label small fw-semibold text-body">Descripción breve</label>
+                <textarea id="inputDescripcionAsignatura" class="form-control bg-body" rows="2" placeholder="Objetivos o contenido general de la asignatura..."></textarea>
+              </div>
+            </div>
+          </div>
+
+          <div class="modal-footer border-top px-4 py-3">
+            <button type="button" class="btn btn-outline-secondary rounded-3 small fw-semibold" data-bs-dismiss="modal">Cancelar</button>
+            <button type="submit" class="btn btn-success rounded-3 px-4 small fw-semibold" id="btnGuardarAsignatura">
+              Guardar asignatura
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL: CONFIRMAR ACTIVAR / DESACTIVAR ASIGNATURA                        -->
+  <!-- ======================================================================= -->
+  <div class="modal fade" id="modalConfirmarEstado" tabindex="-1" aria-labelledby="tituloModalEstado" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 shadow">
+        <div class="modal-header border-bottom-0 pb-0">
+          <h5 class="modal-title fw-bold text-body" id="tituloModalEstado">Cambiar estado de asignatura</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-body-secondary small mb-3" id="mensajeModalEstado"></p>
+          <div class="border rounded-3 p-3 bg-body-tertiary small" id="detalleAsignaturaEstado"></div>
+        </div>
+        <div class="modal-footer border-top-0 pt-0">
+          <button type="button" class="btn btn-outline-secondary btn-sm rounded-3 px-3" data-bs-dismiss="modal">Cancelar</button>
+          <button type="button" id="btnConfirmarCambioEstado" class="btn btn-warning btn-sm rounded-3 px-3 fw-semibold">
+            Confirmar cambio
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Navegación compartida -->
+  <script src="../../js/utils/navbar.js"></script>
+  <!-- Lógica de gestión de asignaturas -->
+  <script src="../../js/pages/admin/asignaturas.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      renderizarNavegacionAdmin("asignaturas");
+    });
+  </script>
+</body>
+</html>

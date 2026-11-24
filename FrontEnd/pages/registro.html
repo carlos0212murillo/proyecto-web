@@ -1,0 +1,282 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Crear cuenta | Portal Académico UNAH</title>
+
+  <!-- Bootstrap 5 Oficial -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-body-tertiary">
+
+  <!-- Barra superior institucional -->
+  <header class="bg-body border-bottom py-3">
+    <div class="container d-flex justify-content-between align-items-center" style="max-width: 860px;">
+      <div class="d-flex align-items-center gap-3">
+        <div class="bg-success text-white rounded-3 d-flex align-items-center justify-content-center" style="width: 42px; height: 42px;">
+          <i class="bi bi-bank fs-5"></i>
+        </div>
+        <div>
+          <h1 class="h6 fw-bold text-body mb-0">Universidad Nacional Autónoma de Honduras</h1>
+          <span class="text-body-secondary small">Portal de matrícula</span>
+        </div>
+      </div>
+
+      <!-- Botón para alternar tema claro/oscuro -->
+      <button type="button" class="btn btn-outline-secondary btn-sm rounded-3 btn-toggle-tema" aria-label="Cambiar tema" title="Cambiar tema claro/oscuro">
+        <i class="bi bi-moon icono-tema"></i>
+      </button>
+    </div>
+  </header>
+
+  <!-- Contenedor principal del formulario -->
+  <main class="container py-5" style="max-width: 860px;">
+    <div class="card border shadow-sm rounded-4 p-4 p-md-5 bg-body">
+
+      <!-- Título y descripción -->
+      <div class="mb-4">
+        <h2 class="fw-bold text-body mb-1">Crea tu cuenta</h2>
+        <p class="text-body-secondary small mb-1">
+          Completa tus datos para gestionar tu matrícula y acceder a los servicios estudiantiles.
+        </p>
+        <p class="text-body-secondary small mb-0">
+          Los campos marcados con <span class="text-danger fw-bold">*</span> son obligatorios.
+        </p>
+      </div>
+
+      <!-- Alerta dinámica para errores o confirmación -->
+      <div id="alertaRegistro" class="alert d-none py-2 small" role="alert"></div>
+
+      <form id="formRegistro" novalidate>
+
+        <!-- SECCIÓN 01: Datos personales -->
+        <section class="mb-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span class="badge bg-success text-white rounded-3 px-2 py-2 fw-bold">01</span>
+            <div>
+              <h3 class="h6 fw-bold text-body mb-0">Datos personales</h3>
+              <p class="text-body-secondary small mb-0">Ingresa tu información tal como aparece en tu documento de identidad.</p>
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <!-- Nombres -->
+            <div class="col-12 col-md-6">
+              <label for="nombres" class="form-label fw-semibold small text-body">
+                Nombres <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-person"></i>
+                </span>
+                <input type="text" class="form-control bg-body border-start-0" id="nombres" placeholder="Ingresa tus nombres" required>
+              </div>
+            </div>
+
+            <!-- Apellidos -->
+            <div class="col-12 col-md-6">
+              <label for="apellidos" class="form-label fw-semibold small text-body">
+                Apellidos <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-person"></i>
+                </span>
+                <input type="text" class="form-control bg-body border-start-0" id="apellidos" placeholder="Ingresa tus apellidos" required>
+              </div>
+            </div>
+
+            <!-- Número de identidad -->
+            <div class="col-12 col-md-6">
+              <label for="identidad" class="form-label fw-semibold small text-body">
+                Número de identidad <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-person-vcard"></i>
+                </span>
+                <input type="text" class="form-control bg-body border-start-0" id="identidad" placeholder="0000-0000-00000" required>
+              </div>
+            </div>
+
+            <!-- Fecha de nacimiento -->
+            <div class="col-12 col-md-6">
+              <label for="fechaNacimiento" class="form-label fw-semibold small text-body">
+                Fecha de nacimiento <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-calendar"></i>
+                </span>
+                <input type="date" class="form-control bg-body border-start-0" id="fechaNacimiento" required>
+              </div>
+            </div>
+
+            <!-- Correo electrónico -->
+            <div class="col-12 col-md-6">
+              <label for="correo" class="form-label fw-semibold small text-body">
+                Correo electrónico <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-envelope"></i>
+                </span>
+                <input type="email" class="form-control bg-body border-start-0" id="correo" placeholder="nombre@ejemplo.com" required>
+              </div>
+            </div>
+
+            <!-- Teléfono -->
+            <div class="col-12 col-md-6">
+              <label for="telefono" class="form-label fw-semibold small text-body">
+                Teléfono <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-telephone"></i>
+                </span>
+                <input type="tel" class="form-control bg-body border-start-0" id="telefono" placeholder="+504 0000-0000" required>
+              </div>
+            </div>
+
+            <!-- Dirección de residencia -->
+            <div class="col-12">
+              <label for="direccion" class="form-label fw-semibold small text-body">
+                Dirección de residencia <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-geo-alt"></i>
+                </span>
+                <input type="text" class="form-control bg-body border-start-0" id="direccion" placeholder="Departamento, municipio, colonia y dirección exacta" required>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="text-body-secondary opacity-25 my-4">
+
+        <!-- SECCIÓN 02: Datos académicos -->
+        <section class="mb-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span class="badge bg-success text-white rounded-3 px-2 py-2 fw-bold">02</span>
+            <div>
+              <h3 class="h6 fw-bold text-body mb-0">Datos académicos</h3>
+              <p class="text-body-secondary small mb-0">Selecciona la carrera y el centro universitario donde deseas estudiar.</p>
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <!-- Carrera -->
+            <div class="col-12">
+              <label for="carrera" class="form-label fw-semibold small text-body">
+                Carrera <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-mortarboard"></i>
+                </span>
+                <select class="form-select bg-body border-start-0" id="carrera" required>
+                  <option value="" selected disabled>Selecciona una carrera</option>
+                  <option value="Ingeniería en Sistemas">Ingeniería en Sistemas</option>
+                  <option value="Ingeniería Industrial">Ingeniería Industrial</option>
+                  <option value="Ingeniería Civil">Ingeniería Civil</option>
+                  <option value="Administración de Empresas">Administración de Empresas</option>
+                  <option value="Contaduría Pública y Finanzas">Contaduría Pública y Finanzas</option>
+                  <option value="Medicina y Cirugía">Medicina y Cirugía</option>
+                </select>
+              </div>
+            </div>
+
+            <!-- Centro universitario -->
+            <div class="col-12">
+              <label for="centro" class="form-label fw-semibold small text-body">
+                Centro universitario <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-building"></i>
+                </span>
+                <select class="form-select bg-body border-start-0" id="centro" required>
+                  <option value="" selected disabled>Selecciona un centro</option>
+                  <option value="Ciudad Universitaria (Tegucigalpa)">Ciudad Universitaria (Tegucigalpa)</option>
+                  <option value="UNAH-VS (San Pedro Sula)">UNAH-VS (San Pedro Sula)</option>
+                  <option value="CURLA (La Ceiba)">CURLA (La Ceiba)</option>
+                  <option value="CURC (Comayagua)">CURC (Comayagua)</option>
+                  <option value="CUROC (Santa Rosa de Copán)">CUROC (Santa Rosa de Copán)</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <hr class="text-body-secondary opacity-25 my-4">
+
+        <!-- SECCIÓN 03: Datos de acceso -->
+        <section class="mb-4">
+          <div class="d-flex align-items-center gap-3 mb-3">
+            <span class="badge bg-success text-white rounded-3 px-2 py-2 fw-bold">03</span>
+            <div>
+              <h3 class="h6 fw-bold text-body mb-0">Datos de acceso</h3>
+              <p class="text-body-secondary small mb-0">Crea una contraseña segura para proteger tu cuenta.</p>
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <!-- Contraseña -->
+            <div class="col-12 col-md-6">
+              <label for="passwordRegistro" class="form-label fw-semibold small text-body">
+                Contraseña <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-lock"></i>
+                </span>
+                <input type="password" class="form-control bg-body border-start-0 border-end-0" id="passwordRegistro" placeholder="Crea una contraseña" required>
+                <button type="button" class="btn bg-body border border-start-0 text-body-secondary px-3 toggle-password" data-target="passwordRegistro" aria-label="Mostrar u ocultar contraseña">
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+            </div>
+
+            <!-- Confirmar contraseña -->
+            <div class="col-12 col-md-6">
+              <label for="confirmarPassword" class="form-label fw-semibold small text-body">
+                Confirmar contraseña <span class="text-danger">*</span>
+              </label>
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-lock"></i>
+                </span>
+                <input type="password" class="form-control bg-body border-start-0 border-end-0" id="confirmarPassword" placeholder="Repite tu contraseña" required>
+                <button type="button" class="btn bg-body border border-start-0 text-body-secondary px-3 toggle-password" data-target="confirmarPassword" aria-label="Mostrar u ocultar confirmación">
+                  <i class="bi bi-eye"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- Botón de envío -->
+        <button type="submit" class="btn btn-success w-100 py-2 fw-semibold mt-2 mb-3">
+          Crear cuenta <i class="bi bi-arrow-right ms-1"></i>
+        </button>
+
+        <!-- Enlace de regreso al login -->
+        <p class="text-center text-body-secondary small mb-0">
+          ¿Ya tienes una cuenta?
+          <a href="../index.html" class="text-success text-decoration-none fw-semibold ms-1">Inicia sesión</a>
+        </p>
+
+      </form>
+    </div>
+  </main>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Lógica compartida de autenticación y registro -->
+  <script src="../js/pages/auth.js"></script>
+</body>
+</html>
