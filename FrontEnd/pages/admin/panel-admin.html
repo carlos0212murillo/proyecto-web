@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión académica | Portal Administrativo UNAH</title>
+
+  <!-- Bootstrap 5 Oficial -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-body-tertiary">
+
+  <div class="d-flex min-vh-100">
+    <!-- Barra lateral administrativa -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Área de contenido principal -->
+    <div class="flex-grow-1 d-flex flex-column min-w-0">
+      <!-- Barra superior -->
+      <div id="topbarContainer"></div>
+
+      <main class="container-fluid p-4 p-lg-5" style="max-width: 1320px;">
+
+        <!-- ENCABEZADO Y ACCESO DIRECTO A GESTIÓN -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+          <div>
+            <p class="text-uppercase text-body-secondary fw-semibold mb-1" style="font-size: 0.75rem; letter-spacing: 0.04em;" id="fechaActualAdmin">
+              MARTES, 24 DE NOVIEMBRE DE 2026
+            </p>
+            <h1 class="h2 fw-bold text-body mb-1">Gestión académica</h1>
+            <p class="text-body-secondary small mb-0">
+              Administra la oferta académica y supervisa la disponibilidad del período.
+            </p>
+          </div>
+
+          <div class="d-flex align-items-center gap-2">
+            <!-- Selector de período -->
+            <select id="selectPeriodoAdmin" class="form-select bg-body border rounded-3 small fw-semibold" style="width: auto;">
+              <option value="2027-I" selected>2027-I</option>
+              <option value="2026-II">2026-II</option>
+            </select>
+
+            <!-- Redirige a la vista dedicada de gestión de asignaturas -->
+            <a href="./asignaturas.html" class="btn btn-success rounded-3 px-3 py-2 small fw-semibold d-flex align-items-center gap-2">
+              <i class="bi bi-plus-lg"></i>
+              <span>Nueva asignatura</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- FILA DE 4 TARJETAS DE MÉTRICAS (KPIs) -->
+        <div class="row g-3 mb-4">
+          <!-- KPI 1: Asignaturas activas -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card border rounded-4 p-4 h-100 bg-body shadow-sm">
+              <div class="text-body-secondary small fw-semibold mb-2">Asignaturas activas</div>
+              <div class="display-6 fw-bold text-body mb-1" id="kpiAsignaturasActivas">0</div>
+              <div class="small text-body-secondary">Oferta de Ingeniería en Sistemas</div>
+            </div>
+          </div>
+
+          <!-- KPI 2: Secciones abiertas -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card border rounded-4 p-4 h-100 bg-body shadow-sm">
+              <div class="text-body-secondary small fw-semibold mb-2">Secciones abiertas</div>
+              <div class="display-6 fw-bold text-body mb-1" id="kpiSeccionesAbiertas">0</div>
+              <div class="small text-body-secondary" id="kpiDetalleSecciones">Distribuidas en 0 asignaturas</div>
+            </div>
+          </div>
+
+          <!-- KPI 3: Cupos disponibles -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card border rounded-4 p-4 h-100 bg-body shadow-sm">
+              <div class="text-body-secondary small fw-semibold mb-2">Cupos disponibles</div>
+              <div class="display-6 fw-bold text-body mb-1" id="kpiCuposDisponibles">0</div>
+              <div class="small text-success fw-semibold" id="kpiCuposTotales">De 0 cupos ofertados</div>
+            </div>
+          </div>
+
+          <!-- KPI 4: Ocupación del período -->
+          <div class="col-12 col-sm-6 col-xl-3">
+            <div class="card border rounded-4 p-4 h-100 bg-body shadow-sm">
+              <div class="text-body-secondary small fw-semibold mb-2">Ocupación del período</div>
+              <div class="display-6 fw-bold text-body mb-1" id="kpiPorcentajeOcupacion">0 %</div>
+              <div class="small text-body-secondary" id="kpiEstudiantesMatriculados">0 matrículas registradas</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLA INFORMATIVA DE ASIGNATURAS Y SECCIONES -->
+        <div class="card border rounded-4 p-4 bg-body shadow-sm mb-4">
+          <!-- Cabecera de tarjeta -->
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-start gap-3 mb-3">
+            <div>
+              <h2 class="h5 fw-bold text-body mb-1">Asignaturas y secciones</h2>
+              <p class="text-body-secondary small mb-0" id="subtituloTablaAdmin">Ingeniería en Sistemas · Período 2027-I</p>
+            </div>
+
+            <!-- Acceso directo a la vista de gestión de secciones -->
+            <a href="./secciones.html" class="btn btn-outline-secondary rounded-3 px-3 py-2 small fw-semibold">
+              <i class="bi bi-plus-lg me-1"></i> Nueva sección
+            </a>
+          </div>
+
+          <!-- Barra de búsqueda y filtro -->
+          <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3 mb-3">
+            <div class="d-flex flex-column flex-sm-row gap-2 flex-grow-1" style="max-width: 620px;">
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-search"></i>
+                </span>
+                <input
+                  type="text"
+                  id="inputBuscarAdmin"
+                  class="form-control bg-body border-start-0 small"
+                  placeholder="Buscar por nombre o código..."
+                >
+              </div>
+
+              <select id="filtroEstadoAdmin" class="form-select bg-body small" style="min-width: 175px;">
+                <option value="todos" selected>Estado: todos</option>
+                <option value="Disponible">Disponible</option>
+                <option value="Completo">Completo</option>
+                <option value="Inactiva">Inactiva</option>
+              </select>
+            </div>
+
+            <span class="text-body-secondary small fw-semibold" id="contadorAsignaturasTabla">0 asignaturas</span>
+          </div>
+
+          <!-- Tabla limpia (100% informativa, sin botones repetidos por fila) -->
+          <div class="table-responsive">
+            <table class="table align-middle mb-0">
+              <thead>
+                <tr class="text-uppercase text-body-secondary border-bottom" style="font-size: 0.72rem; letter-spacing: 0.04em;">
+                  <th style="width: 34%;">Asignatura</th>
+                  <th class="text-center" style="width: 12%;">Secciones</th>
+                  <th style="width: 26%;">Matriculados / Cupos</th>
+                  <th class="text-center" style="width: 14%;">Disponibles</th>
+                  <th class="text-end" style="width: 14%;">Estado</th>
+                </tr>
+              </thead>
+              <tbody id="tablaResumenAdminBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- FILA INFERIOR: PERÍODOS ACADÉMICOS Y REPORTES BÁSICOS -->
+        <div class="row g-4">
+
+          <!-- Tarjeta izquierda: Períodos académicos -->
+          <div class="col-12 col-lg-6">
+            <div class="card border rounded-4 p-4 bg-body shadow-sm h-100">
+              <div class="d-flex justify-content-between align-items-center mb-3">
+                <h2 class="h5 fw-bold text-body mb-0">Períodos académicos</h2>
+                <a href="./periodos.html" class="text-success text-decoration-none small fw-semibold">
+                  Gestionar períodos <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+              </div>
+
+              <div class="list-group list-group-flush">
+                <!-- Período 1 -->
+                <div class="list-group-item bg-transparent px-0 py-3 border-bottom d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                      <span class="fw-bold text-body">2027-I</span>
+                      <span class="badge bg-success-subtle text-success rounded-pill px-2 py-1">En curso</span>
+                    </div>
+                    <div class="text-body-secondary small">Matrícula: 11 – 22 ene. 2027</div>
+                  </div>
+                  <span class="text-body-secondary small">Retiros habilitados</span>
+                </div>
+
+                <!-- Período 2 -->
+                <div class="list-group-item bg-transparent px-0 py-3 d-flex justify-content-between align-items-center">
+                  <div>
+                    <div class="d-flex align-items-center gap-2 mb-1">
+                      <span class="fw-bold text-body">2027-II</span>
+                      <span class="badge bg-warning-subtle text-warning-emphasis rounded-pill px-2 py-1">Planificación</span>
+                    </div>
+                    <div class="text-body-secondary small">Inicio de clases: 17 may. 2027</div>
+                  </div>
+                  <span class="text-body-secondary small">Próximo período</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Tarjeta derecha: Reportes básicos (con botón único hacia la pantalla de reportes) -->
+          <div class="col-12 col-lg-6">
+            <div class="card border border-success-subtle rounded-4 p-4 bg-success-subtle h-100 d-flex flex-column justify-content-between">
+              <div>
+                <h2 class="h5 fw-bold text-body mb-1">Reportes básicos</h2>
+                <p class="text-body-secondary small mb-4" id="subtituloReportesAdmin">
+                  Resumen ejecutivo de matrícula y demanda del período 2027-I.
+                </p>
+
+                <div class="d-flex flex-column gap-3 mb-4">
+                  <div class="d-flex justify-content-between align-items-center border-bottom border-success-subtle pb-2">
+                    <span class="small fw-semibold text-body">Asignatura con mayor demanda</span>
+                    <span class="small fw-bold text-success" id="reporteMayorDemanda">—</span>
+                  </div>
+                  <div class="d-flex justify-content-between align-items-center border-bottom border-success-subtle pb-2">
+                    <span class="small fw-semibold text-body">Asignaturas sin cupos disponibles</span>
+                    <span class="small fw-bold text-body" id="reporteSinCupos">0 asignaturas</span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2">
+                <span class="text-success small fw-medium" id="pieReportesAdmin">Datos del período · 0 secciones</span>
+                <a href="./reportes.html" class="btn btn-success rounded-3 px-4 py-2 small fw-semibold">
+                  Ver reportes completos <i class="bi bi-arrow-right ms-1"></i>
+                </a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Navegación compartida -->
+  <script src="../../js/utils/navbar.js"></script>
+  <!-- Lógica del dashboard administrativo -->
+  <script src="../../js/pages/admin/resumen.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      renderizarNavegacionAdmin("resumen");
+    });
+  </script>
+</body>
+</html>

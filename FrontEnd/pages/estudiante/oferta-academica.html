@@ -1,0 +1,281 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Oferta académica | Portal del Estudiante UNAH</title>
+
+  <!-- Bootstrap 5 Oficial -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-body-tertiary">
+
+  <div class="d-flex min-vh-100">
+    <!-- Contenedor donde navbar.js inyecta el menú lateral -->
+    <div id="sidebarContainer"></div>
+
+    <!-- Área de contenido principal -->
+    <div class="flex-grow-1 d-flex flex-column min-w-0">
+      <!-- Contenedor donde navbar.js inyecta la barra superior -->
+      <div id="topbarContainer"></div>
+
+      <main class="container-fluid p-4 p-lg-5" style="max-width: 1320px;">
+
+        <!-- ENCABEZADO DE LA VISTA -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+          <div>
+            <p class="text-uppercase text-body-secondary fw-semibold mb-1" style="font-size: 0.75rem; letter-spacing: 0.04em;">
+              MATRÍCULA · PERÍODO 2027-I
+            </p>
+            <h1 class="h2 fw-bold text-body mb-1">Oferta académica</h1>
+            <p class="text-body-secondary small mb-0">
+              Explora tus asignaturas habilitadas, despliega sus secciones y selecciona las que deseas cursar.
+            </p>
+          </div>
+
+          <div style="min-width: 180px;">
+            <label for="selectPeriodo" class="form-label text-body-secondary small fw-semibold mb-1">Período académico</label>
+            <select id="selectPeriodo" class="form-select bg-body border rounded-3 small fw-semibold">
+              <option value="2027-I" selected>2027-I</option>
+              <option value="2026-III">2026-III</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- ALERTA GLOBAL PARA CONFLICTOS (Choque de horario, duplicados o límite de UV) -->
+        <div id="alertaOferta" class="alert d-none alert-dismissible fade show py-2 small mb-4" role="alert">
+          <span id="textoAlertaOferta"></span>
+          <button type="button" class="btn-close btn-sm" aria-label="Cerrar" onclick="document.getElementById('alertaOferta').classList.add('d-none')"></button>
+        </div>
+
+        <!-- PANEL DE BÚSQUEDA Y FILTROS -->
+        <div class="card border rounded-4 p-4 bg-body shadow-sm mb-4">
+          <!-- Fila 1: Buscador y botones -->
+          <div class="row g-2 align-items-center mb-3">
+            <div class="col-12 col-md-8 col-lg-9">
+              <div class="input-group">
+                <span class="input-group-text bg-body text-body-secondary border-end-0">
+                  <i class="bi bi-search"></i>
+                </span>
+                <input
+                  type="text"
+                  id="inputBusqueda"
+                  class="form-control bg-body border-start-0"
+                  placeholder="Buscar por nombre o código de materia (ej. IS-601 o Ingeniería)..."
+                >
+              </div>
+            </div>
+            <div class="col-6 col-md-2 col-lg-1 d-grid">
+              <button type="button" id="btnBuscar" class="btn btn-success fw-semibold small">Buscar</button>
+            </div>
+            <div class="col-6 col-md-2 col-lg-2 d-grid">
+              <button type="button" id="btnLimpiarFiltros" class="btn btn-outline-secondary fw-semibold small">Limpiar filtros</button>
+            </div>
+          </div>
+
+          <!-- Fila 2: Selectores de filtro -->
+          <div class="row g-3">
+            <div class="col-12 col-sm-6 col-lg-3">
+              <label for="filtroCarrera" class="form-label text-body-secondary small fw-semibold mb-1">Carrera</label>
+              <select id="filtroCarrera" class="form-select bg-body small">
+                <option value="Ingeniería en Sistemas" selected>Ingeniería en Sistemas</option>
+                <option value="Todas">Todas las carreras</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+              <label for="filtroCampus" class="form-label text-body-secondary small fw-semibold mb-1">Campus</label>
+              <select id="filtroCampus" class="form-select bg-body small">
+                <option value="Ciudad Universitaria" selected>Ciudad Universitaria</option>
+                <option value="UNAH-VS">UNAH-VS</option>
+                <option value="Todos">Todos los campus</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+              <label for="filtroModalidad" class="form-label text-body-secondary small fw-semibold mb-1">Modalidad</label>
+              <select id="filtroModalidad" class="form-select bg-body small">
+                <option value="Todas" selected>Todas las modalidades</option>
+                <option value="Presencial">Presencial</option>
+                <option value="Virtual">Virtual</option>
+              </select>
+            </div>
+
+            <div class="col-12 col-sm-6 col-lg-3">
+              <label for="filtroJornada" class="form-label text-body-secondary small fw-semibold mb-1">Jornada</label>
+              <select id="filtroJornada" class="form-select bg-body small">
+                <option value="Todas" selected>Todas las jornadas</option>
+                <option value="Matutina">Matutina (07:00 - 12:00)</option>
+                <option value="Vespertina">Vespertina (13:00 - 17:00)</option>
+                <option value="Nocturna">Nocturna (17:00 - 21:00)</option>
+              </select>
+            </div>
+          </div>
+        </div>
+
+        <!-- TARJETA DE MATERIAS HABILITADAS (CON SECCIONES DESPLEGABLES) -->
+        <div class="card border rounded-4 p-4 bg-body shadow-sm mb-4">
+          <!-- Cabecera de tarjeta -->
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2 mb-4">
+            <div class="d-flex align-items-center gap-2">
+              <h2 class="h5 fw-bold text-body mb-0">Materias disponibles</h2>
+              <span id="badgeTotalMaterias" class="badge bg-success-subtle text-success rounded-pill px-3 py-1">0 materias</span>
+            </div>
+
+            <div class="form-check">
+              <input class="form-check-input" type="checkbox" id="checkSoloCupos">
+              <label class="form-check-label small text-body-secondary fw-semibold" for="checkSoloCupos">
+                Solo con cupos
+              </label>
+            </div>
+          </div>
+
+          <!-- Encabezados de columnas (escritorio) -->
+          <div class="row text-uppercase text-body-secondary fw-bold border-bottom pb-2 mb-2 px-2 d-none d-md-flex" style="font-size: 0.7rem; letter-spacing: 0.04em;">
+            <div class="col-md-5">Asignatura / Código</div>
+            <div class="col-md-1 text-center">UV</div>
+            <div class="col-md-3">Requisito aprobado</div>
+            <div class="col-md-3 text-end">Secciones</div>
+          </div>
+
+          <!-- Contenedor dinámico donde JS renderiza las asignaturas y sus secciones desplegables -->
+          <div id="contenedorAsignaturas" class="d-flex flex-column gap-2"></div>
+
+          <!-- Pie informativo -->
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-center gap-2 pt-3 mt-3 border-top">
+            <span id="textoPaginacion" class="text-body-secondary small">Mostrando 0 materias habilitadas</span>
+            <span class="text-body-secondary small">
+              <i class="bi bi-info-circle me-1"></i> Haz clic en <strong>Ver secciones</strong> para elegir horario y docente.
+            </span>
+          </div>
+        </div>
+
+        <!-- BARRA INFERIOR DE RESUMEN DE SELECCIÓN PROVISIONAL -->
+        <div class="card border border-success rounded-4 p-3 px-4 bg-success-subtle shadow-sm sticky-bottom">
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-3">
+            <div>
+              <div class="fw-bold text-success small" id="resumenCantidadSeleccion">0 materias seleccionadas</div>
+              <div class="text-body-secondary small" id="resumenUvSeleccion">
+                0 de 18 UV · Seleccionar no confirma tu matrícula.
+              </div>
+            </div>
+
+            <button
+              type="button"
+              id="btnVerSeleccion"
+              class="btn btn-success rounded-3 px-4 py-2 fw-semibold small"
+              data-bs-toggle="modal"
+              data-bs-target="#modalConfirmarMatricula"
+              disabled
+            >
+              Ver selección (0) <i class="bi bi-arrow-right ms-1"></i>
+            </button>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL: REVISAR SELECCIÓN PROVISIONAL Y CONFIRMAR MATRÍCULA              -->
+  <!-- ======================================================================= -->
+  <div class="modal fade" id="modalConfirmarMatricula" tabindex="-1" aria-labelledby="tituloModalConfirmar" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+      <div class="modal-content border-0 rounded-4 shadow">
+
+        <div class="modal-header border-bottom px-4 py-3">
+          <div>
+            <h5 class="modal-title fw-bold text-body mb-0" id="tituloModalConfirmar">Resumen de selección provisional</h5>
+            <span class="text-body-secondary small">Período académico 2027-I · Revisa tus secciones antes de confirmar</span>
+          </div>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+
+        <div class="modal-body p-4">
+          <!-- Indicador de créditos (UV) -->
+          <div class="card border rounded-3 p-3 bg-body-tertiary mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-1 small">
+              <span class="fw-semibold text-body">Carga académica total (matriculables + lista de espera)</span>
+              <span class="fw-bold text-success" id="modalTextoUv">0 / 18 UV</span>
+            </div>
+            <div class="progress" style="height: 8px;">
+              <div id="modalBarraUv" class="progress-bar bg-success" role="progressbar" style="width: 0%;" aria-valuenow="0" aria-valuemin="0" aria-valuemax="18"></div>
+            </div>
+          </div>
+
+          <!-- Bloque 1: Materias con cupo a matricular -->
+          <div class="mb-4">
+            <h6 class="fw-bold text-body small text-uppercase mb-2">
+              <i class="bi bi-check-circle-fill text-success me-1"></i> Asignaturas a matricular
+            </h6>
+            <div id="listaModalMatricular" class="list-group"></div>
+          </div>
+
+          <!-- Bloque 2: Solicitudes en lista de espera (0 cupos) -->
+          <div id="seccionModalEspera" class="d-none">
+            <h6 class="fw-bold text-body small text-uppercase mb-2">
+              <i class="bi bi-hourglass-split text-warning me-1"></i> Solicitudes en lista de espera
+            </h6>
+            <p class="text-body-secondary small mb-2">
+              Estas secciones no tienen cupos actualmente. Sus UV ya se reservan en tu carga máxima y quedarán en espera hasta que administración amplíe cupos.
+            </p>
+            <div id="listaModalEspera" class="list-group"></div>
+          </div>
+        </div>
+
+        <div class="modal-footer border-top px-4 py-3">
+          <button type="button" class="btn btn-outline-secondary rounded-3 small fw-semibold" data-bs-dismiss="modal">
+            Seguir explorando
+          </button>
+          <button type="button" id="btnConfirmarMatriculaFinal" class="btn btn-success rounded-3 px-4 small fw-semibold">
+            <i class="bi bi-check2-circle me-1"></i> Aceptar y matricular
+          </button>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================================= -->
+  <!-- MODAL: MATRÍCULA CONFIRMADA EXITOSAMENTE                                -->
+  <!-- ======================================================================= -->
+  <div class="modal fade" id="modalMatriculaExitosa" tabindex="-1" aria-labelledby="tituloModalExito" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 shadow text-center p-4">
+        <div class="modal-body">
+          <div class="bg-success text-white rounded-circle d-inline-flex align-items-center justify-content-center mb-3" style="width: 60px; height: 60px;">
+            <i class="bi bi-check-lg fs-2"></i>
+          </div>
+          <h4 class="fw-bold text-body mb-2" id="tituloModalExito">¡Matrícula registrada con éxito!</h4>
+          <p class="text-body-secondary small mb-3" id="detalleMatriculaExitosa">
+            Tus asignaturas han sido inscritas correctamente para el período 2027-I.
+          </p>
+          <div class="d-grid gap-2">
+            <a href="./forma-03.html" class="btn btn-success rounded-3 fw-semibold small">
+              <i class="bi bi-file-earmark-check me-1"></i> Ver comprobante (Forma 03)
+            </a>
+            <button type="button" class="btn btn-outline-secondary rounded-3 fw-semibold small" data-bs-dismiss="modal">
+              Cerrar
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Navegación compartida -->
+  <script src="../../js/utils/navbar.js"></script>
+  <!-- Lógica de oferta académica -->
+  <script src="../../js/pages/oferta-academica.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      renderizarNavegacionEstudiante("matricula");
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,247 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Forma 03 - Comprobante de Matrícula | Portal del Estudiante UNAH</title>
+
+  <!-- Bootstrap 5 Oficial -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Bootstrap Icons -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet">
+</head>
+<body class="bg-body-tertiary">
+
+  <div class="d-flex min-vh-100">
+    <!-- Barra lateral (oculta al imprimir) -->
+    <div id="sidebarContainer" class="d-print-none"></div>
+
+    <!-- Área de contenido principal -->
+    <div class="flex-grow-1 d-flex flex-column min-w-0">
+      <!-- Barra superior (oculta al imprimir) -->
+      <div id="topbarContainer" class="d-print-none"></div>
+
+      <main class="container-fluid p-4 p-lg-5" style="max-width: 1320px;">
+
+        <!-- ENCABEZADO DE ACCIONES -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-end gap-3 mb-4">
+          <div>
+            <p class="text-uppercase text-body-secondary fw-semibold mb-1" style="font-size: 0.75rem; letter-spacing: 0.04em;">
+              COMPROBANTE OFICIAL DE MATRÍCULA · PERÍODO 2027-I
+            </p>
+            <h1 class="h2 fw-bold text-body mb-1">Forma 03 — Matrícula</h1>
+            <p class="text-body-secondary small mb-0">
+              Consulta tus asignaturas inscritas, solicitudes en lista de espera y opciones de cancelación vigentes.
+            </p>
+          </div>
+
+          <div class="d-flex flex-wrap align-items-center gap-2 d-print-none">
+            <a href="./oferta-academica.html" class="btn btn-outline-success rounded-3 px-3 py-2 small fw-semibold">
+              <i class="bi bi-plus-lg me-1"></i> Agregar clases
+            </a>
+            <button type="button" id="btnImprimirForma03" class="btn btn-success rounded-3 px-3 py-2 small fw-semibold">
+              <i class="bi bi-printer me-1"></i> Imprimir / Guardar PDF
+            </button>
+          </div>
+        </div>
+
+        <!-- ALERTA DINÁMICA DE ACCIONES -->
+        <div id="alertaForma03" class="alert d-none alert-dismissible fade show py-2 small mb-4 d-print-none" role="alert">
+          <span id="textoAlertaForma03"></span>
+          <button type="button" class="btn-close btn-sm" aria-label="Cerrar" onclick="document.getElementById('alertaForma03').classList.add('d-none')"></button>
+        </div>
+
+        <!-- FICHA OFICIAL FORMA 03: DATOS DEL ESTUDIANTE Y VALIDACIÓN (SIN FOTOGRAFÍA) -->
+        <div class="card border rounded-4 p-4 bg-body shadow-sm mb-4">
+          <div class="row g-4 align-items-center">
+            <!-- Datos institucionales y del estudiante -->
+            <div class="col-12 col-lg-9">
+              <div class="d-flex align-items-center gap-2 mb-3 pb-2 border-bottom">
+                <span class="badge bg-success text-white px-2 py-1">UNAH</span>
+                <span class="fw-bold text-body small text-uppercase">Universidad Nacional Autónoma de Honduras · Dirección de Ingreso, Permanencia y Promoción</span>
+              </div>
+
+              <div class="row g-3 small">
+                <div class="col-12 col-sm-6 col-md-4">
+                  <span class="text-body-secondary text-uppercase fw-bold d-block" style="font-size: 0.68rem;">Número de Cuenta</span>
+                  <span class="fw-bold text-body fs-6">20211023893</span>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4">
+                  <span class="text-body-secondary text-uppercase fw-bold d-block" style="font-size: 0.68rem;">Centro Universitario</span>
+                  <span class="fw-semibold text-body">Ciudad Universitaria</span>
+                </div>
+                <div class="col-12 col-sm-6 col-md-4">
+                  <span class="text-body-secondary text-uppercase fw-bold d-block" style="font-size: 0.68rem;">Período / Año</span>
+                  <span class="fw-semibold text-body">2027-I · 2027</span>
+                </div>
+                <div class="col-12 col-md-6">
+                  <span class="text-body-secondary text-uppercase fw-bold d-block" style="font-size: 0.68rem;">Nombre Completo</span>
+                  <span class="fw-bold text-body">CARLOS JESÚS MURILLO TORRES</span>
+                </div>
+                <div class="col-12 col-md-6">
+                  <span class="text-body-secondary text-uppercase fw-bold d-block" style="font-size: 0.68rem;">Carrera</span>
+                  <span class="fw-semibold text-body">INGENIERÍA EN SISTEMAS COMPUTACIONALES</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- Bloque derecho: Código de matrícula y QR vectorial -->
+            <div class="col-12 col-lg-3 text-center">
+              <div class="border rounded-3 p-3 bg-body-tertiary">
+                <i class="bi bi-qr-code text-body" style="font-size: 4.2rem; line-height: 1;"></i>
+                <div class="text-body-secondary text-uppercase fw-bold mt-2" style="font-size: 0.65rem;">Código de Matrícula</div>
+                <div class="fw-bold text-success small" id="codigoComprobante">F03-20271-84920</div>
+                <div class="text-body-secondary" style="font-size: 0.7rem;" id="fechaGeneracion">Generado hoy</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 3 INDICADORES ÚTILES DEL PROCESO DE MATRÍCULA -->
+        <div class="row g-3 mb-4">
+          <!-- Indicador 1: Carga académica inscrita -->
+          <div class="col-12 col-md-4">
+            <div class="card border rounded-4 p-3 px-4 h-100 bg-body shadow-sm">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="text-body-secondary small fw-semibold">Carga académica inscrita</span>
+                <i class="bi bi-journal-check text-success"></i>
+              </div>
+              <div class="d-flex align-items-baseline gap-2">
+                <span class="h3 fw-bold text-body mb-0" id="kpiTotalClases">0</span>
+                <span class="text-body-secondary small" id="kpiTotalUv">asignaturas · 0 de 18 UV</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Indicador 2: Solicitudes en lista de espera -->
+          <div class="col-12 col-md-4">
+            <div class="card border rounded-4 p-3 px-4 h-100 bg-body shadow-sm">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="text-body-secondary small fw-semibold">En lista de espera</span>
+                <i class="bi bi-hourglass-split text-warning"></i>
+              </div>
+              <div class="d-flex align-items-baseline gap-2">
+                <span class="h3 fw-bold text-body mb-0" id="kpiTotalEspera">0</span>
+                <span class="text-body-secondary small" id="kpiUvEspera">solicitudes · 0 UV reservadas</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- Indicador 3: Estado de cancelación / retiro -->
+          <div class="col-12 col-md-4">
+            <div class="card border rounded-4 p-3 px-4 h-100 bg-body shadow-sm">
+              <div class="d-flex justify-content-between align-items-center mb-1">
+                <span class="text-body-secondary small fw-semibold">Cancelación de clases</span>
+                <span id="badgeEstadoPeriodo" class="badge bg-success-subtle text-success">Habilitado</span>
+              </div>
+              <div class="d-flex justify-content-between align-items-center gap-2 mt-1">
+                <span class="small text-body-secondary" id="textoEstadoPeriodo">Período de matrícula activo</span>
+                <!-- Interruptor de prueba para simular configuración del administrador -->
+                <div class="form-check form-switch mb-0 d-print-none" title="Simular estado habilitado/cerrado por administrador">
+                  <input class="form-check-input" type="checkbox" role="switch" id="switchPeriodoActivo" checked>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLA 1: ASIGNATURAS MATRICULADAS (FORMA 03) -->
+        <div class="card border rounded-4 p-4 bg-body shadow-sm mb-4">
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2 mb-3">
+            <div class="d-flex align-items-center gap-2">
+              <h2 class="h5 fw-bold text-body mb-0">Asignaturas matriculadas</h2>
+              <span id="badgeCountMatriculadas" class="badge bg-success text-white rounded-pill px-3 py-1">0 asignaturas</span>
+            </div>
+            <span class="text-body-secondary small" id="resumenPieTabla">Total inscrito: 0 UV</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr class="text-uppercase text-body-secondary border-bottom" style="font-size: 0.72rem; letter-spacing: 0.04em;">
+                  <th>Cód.</th>
+                  <th>Asignatura / Docente</th>
+                  <th class="text-center">Sección</th>
+                  <th>Horario</th>
+                  <th>Aula</th>
+                  <th class="text-center">UV</th>
+                  <th>Modalidad</th>
+                  <th class="text-center">Estado</th>
+                  <th class="text-end d-print-none">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="tablaMatriculadasBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABLA 2: ASIGNATURAS EN LISTA DE ESPERA -->
+        <div class="card border border-warning rounded-4 p-4 bg-body shadow-sm" id="cardListaEspera">
+          <div class="d-flex flex-column flex-sm-row justify-content-between align-items-sm-center gap-2 mb-2">
+            <div class="d-flex align-items-center gap-2">
+              <h2 class="h5 fw-bold text-body mb-0">Asignaturas en lista de espera</h2>
+              <span id="badgeCountEspera" class="badge bg-warning text-dark rounded-pill px-3 py-1">0 en espera</span>
+            </div>
+            <span class="text-body-secondary small">Sujetas a ampliación de cupos por administración</span>
+          </div>
+
+          <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+              <thead>
+                <tr class="text-uppercase text-body-secondary border-bottom" style="font-size: 0.72rem; letter-spacing: 0.04em;">
+                  <th>Cód.</th>
+                  <th>Asignatura / Docente</th>
+                  <th class="text-center">Sección</th>
+                  <th>Horario</th>
+                  <th>Aula</th>
+                  <th class="text-center">UV</th>
+                  <th class="text-center">Estado</th>
+                  <th class="text-end d-print-none">Acción</th>
+                </tr>
+              </thead>
+              <tbody id="tablaEsperaBody"></tbody>
+            </table>
+          </div>
+        </div>
+
+      </main>
+    </div>
+  </div>
+
+  <!-- MODAL: CONFIRMAR CANCELACIÓN DE CLASE -->
+  <div class="modal fade" id="modalConfirmarCancelacion" tabindex="-1" aria-labelledby="tituloModalCancelar" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content border-0 rounded-4 shadow">
+        <div class="modal-header border-bottom-0 pb-0">
+          <h5 class="modal-title fw-bold text-body" id="tituloModalCancelar">Confirmar cancelación</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-body-secondary small mb-3" id="mensajeModalCancelar">
+            ¿Estás seguro de que deseas cancelar esta asignatura?
+          </p>
+          <div class="border rounded-3 p-3 bg-body-tertiary small" id="detalleClaseCancelar"></div>
+        </div>
+        <div class="modal-footer border-top-0 pt-0">
+          <button type="button" class="btn btn-outline-secondary btn-sm rounded-3 px-3" data-bs-dismiss="modal">No, mantener</button>
+          <button type="button" id="btnConfirmarCancelarClase" class="btn btn-danger btn-sm rounded-3 px-3 fw-semibold">
+            Sí, cancelar clase
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap 5 JS Bundle -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Navegación compartida -->
+  <script src="../../js/utils/navbar.js"></script>
+  <!-- Lógica de Forma 03 -->
+  <script src="../../js/pages/forma-03.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      renderizarNavegacionEstudiante("materias");
+    });
+  </script>
+</body>
+</html>
